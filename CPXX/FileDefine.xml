@@ -1,0 +1,354 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<files ver="20210831">
+  <file type="cpxx02" description="产品信息" pattern="cpxx02\d{6}" frozencolumncount="1">
+    <block>
+      <fields>
+        <field no="1" name="证券代码" type="C6" filter="1"></field>
+        <field no="2" name="ISIN代码" type="C12" hidden="1"></field>
+        <field no="3" name="记录更新时间" type="C8"></field>
+        <field no="4" name="中文证券名称（短）" type="C8" filter="1"></field>
+        <field no="5" name="英文证券名称" type="C10" hidden="1"></field>
+        <field no="6" name="基础证券代码" type="C6" hidden="1"></field>
+        <field no="7" name="市场种类" type="C4"></field>
+        <field no="8" name="证券类别" type="C6"></field>
+        <field no="9" name="证券子类别" type="C3"></field>
+        <field no="10" name="货币种类" type="C3"></field>
+        <field no="11" name="面值" type="N15(3)"></field>
+        <field no="12" name="可流通证券未上市数量" type="N15" hidden="1"></field>
+        <field no="13" name="最后交易日期" type="C15" hidden="1"></field>
+        <field no="14" name="上市日期" type="C8"></field>
+        <field no="15" name="产品集SET编号" type="N3"></field>
+        <field no="16" name="买数量单位" type="N12"></field>
+        <field no="17" name="卖数量单位" type="N12"></field>
+        <field no="18" name="限价申报数量下限" type="N12"></field>
+        <field no="19" name="限价申报数量上限" type="N12"></field>
+        <field no="20" name="前收盘价格" type="N11(3)"></field>
+        <field no="21" name="价格档位" type="N11(3)"></field>
+        <field no="22" name="涨跌幅限制类型" type="C1"></field>
+        <field no="23" name="涨幅上限价格" type="N11(3)"></field>
+        <field no="24" name="跌幅下限价格" type="N11(3)"></field>
+        <field no="25" name="除权比例" type="N11(6)"></field>
+        <field no="26" name="除息金额" type="N11(6)"></field>
+        <field no="27" name="融资标的标志" type="C1"></field>
+        <field no="28" name="融券标的标志" type="C1"></field>
+        <field no="29" name="产品状态标志" type="C20"></field>
+        <field no="30" name="市价申报数量下限" type="N12"></field>
+        <field no="31" name="市价申报数量上限" type="N12"></field>
+        <field no="32" name="中文证券名称（长）" type="C32"></field>
+        <field no="33" name="备注" type="C100"></field>
+      </fields>
+      <dicts>
+      
+      </dicts>
+      <comments>
+        <field no="1" comments="在show2003.dbf中为非交易业务（比如发行业务）而挂牌的“证券代码”（比如780***），没有对应的产品基础信息数据记录，有关属性通过非交易信息文件获取。"></field>
+        <field no="2" comments="ISIN代码（预留）。"></field>
+        <field no="3" comments="标识接口中本记录更新时间HH:MM:SS"></field>
+        <field no="4" comments="中文证券名称（短）"></field>
+        <field no="5" comments="英文证券名称（预留）"></field>
+        <field no="6" comments="当产品为权证、可转债等衍生品时，该字段为其标的产品的证券代码。"></field>
+        <field no="7" comments="‘ASHR’表示A股市场；‘BSHR’表示B股市场。科创板股票、综业平台集合资产管理计划、债券预发行取‘ASHR’。"></field>
+        <field no="8" comments="‘ES’表示股票；‘EU’表示基金；‘D’表示债券。（参考ISO10962），集合资产管理计划、债券预发行取‘D’"></field>
+        <field no="9" comments="自定义详细证券类别;参考：;GBF 国债;GBZ 无息国债;DST 国债分销（仅用于分销阶段）;DVP 公司债（地方债）分销;CBF 企业债券;CCF 可转换企业债券;CPF 公司债券（或地方债券）;FBF 金融机构发行债券;CRP 质押式国债回购;BRP 质押式企债回购;ORP 买断式债券回购;CBD 分离式可转债;OBD 其它债券;CEF 封闭式基金;OEF 开放式基金;EBS 交易所交易基金（ETF）;OFN 其它基金;ASH 以人民币交易的股票（主板）;BSH 以美元交易的股票;KSH  以人民币交易的股票（科创板）;OEQ 其它股票;AMP 集合资产管理计划;WIT 国债预发行;LOF LOF基金;OPS 公开发行优先股;PPS 非公开发行优先股;QRP 报价回购;CMD 控制指令（中登身份认证密码服务产品复用CMD证券子类别）"></field>
+        <field no="10" comments="货币代码取值：美元：USD；人民币：CNY；（参考ISO4217）"></field>
+        <field no="11" comments="债券当前面值，单位元，其他产品取0.000"></field>
+        <field no="12" comments="预留"></field>
+        <field no="13" comments="对于国债预发行产品，为最后交易日期，格式为YYYYMMDD"></field>
+        <field no="14" comments="在上交所首日交易日期，YYYYMMDD"></field>
+        <field no="15" comments="取值范围从1到999。用来表明产品的一种分组方式，用于在多主机间进行负载均衡分配。该值在一个交易日内不会变化。"></field>
+        <field no="16" comments="买订单的申报数量必须是该字段的整数倍。"></field>
+        <field no="17" comments="卖订单的申报数量必须是该字段的整数倍。"></field>
+        <field no="18" comments="限价申报数量下限"></field>
+        <field no="19" comments="限价申报数量上限"></field>
+        <field no="20" comments="前收盘价格（如有除权除息，为除权除息后前收盘价） 对于货币市场基金实时申赎，取值为0.010；集合资产管理计划固定填写挂牌首日开盘参考价格"></field>
+        <field no="21" comments="申报价格的最小变动单位"></field>
+        <field no="22" comments="‘N’表示交易规则（2013修订版）3.4.13规定的有涨跌幅限制类型或者权证管理办法第22条规定；‘R’表示交易规则（2013修订版）3.4.15和3.4.16规定的无涨跌幅限制类型；‘S’表示回购涨跌幅控制类型；‘F’表示基于参考价格的涨跌幅控制；‘P’表示IPO上市首日的涨跌幅控制类型；‘U’表示无任何价格涨跌幅控制类型"></field>
+        <field no="23" comments="对于N类型涨跌幅限制的产品，该字段当日不会更改，基于前收盘价（已首日上市交易产品为发行价）计算。对于R类型无涨跌幅限制的产品，该字段取开盘时基于参考价格计算的上限价格，无实际控制意义。对于P类型IPO上市首日产品，取连续竞价期间基于参考价格计算最大范围的上限价格，针对科创板产品，无实际控制意义。"></field>
+        <field no="24" comments="计算方式参考涨幅上限价格"></field>
+        <field no="25" comments="每股送股比例 对于国债预发行产品，为保证金比例，单位为%。"></field>
+        <field no="26" comments="每股分红金额"></field>
+        <field no="27" comments="‘T’表示是融资标的证券 ‘F’表示不是融资标的证券。"></field>
+        <field no="28" comments="‘T’表示是融券标的证券 ‘F’表示不是融券标的证券。"></field>
+        <field no="29" comments="该字段为20位字符串，每位表示含义如下，无定义则填空格。;第1位对应：‘N’表示首日上市。;第2位对应：‘D’表示除权。;第3位对应：‘R’表示除息。;第4位对应：’D’表示国内正常交易产品，’S’表示股票风险警示产品，’P’表示退市整理产品，’T’表示退市转让产品，’U’表示优先股产品。;第5位：‘Y’表示该产品为存托凭证。 ;第6位对应：’L’表示债券投资者适当性要求类，’M’表示债券机构投资者适当性要求类。;第7位对应：‘F’表示15:00闭市的产品，对应mktdt00.txt行情文件中市场行情状态第4位闭市标志，‘S’表示15:30闭市的产品，对应mktdt00.txt行情文件中市场行情状态第5位闭市标志，为空表示非竞价撮合平台挂牌产品，无意义。;第8位对应：‘U’表示上市时尚未盈利的发行人的股票或存托凭证，发行人首次实现盈利后，取消该特别标识。该字段仅针对科创板产品有效。;第9位对应：‘W’表示具有表决权差异安排的发行人的股票或存托凭证。该字段仅针对科创板产品有效。"></field>
+        <field no="30" comments="市价申报数量下限"></field>
+        <field no="31" comments="市价申报数量上限"></field>
+        <field no="32" comments="中文证券名称（长）"></field>
+        <field no="33" comments="保留字段，用于扩展。备注中补充以下字段，每个字段根据格式定义，参照本文档txt文件对齐方式约定，字段定长，字段间以&amp;分隔。;一、产品属性区间（第1-40位）;1、对于债券类产品（证券类别为“D”），定义如下：;1）招标方式C1，‘1’表示国债预发行利率招标，‘2’表示国债预发行价格招标。;2）基准价格N11(3)，当价格招标时为基准价格，当利率招标时为基准收益率。;3）参考久期N6(2)，单位为年。;4）当期发行量N9，单位为手。;上述字段仅对国债预发行产品有效。其他位预留，暂不启用。;2、对于股票类产品（证券类别为“ES”），定义如下：;1）市场流通总量N15，单位为股。;上述字段仅对A股股票（包括主板及其它板）有效。其他位预留，暂不启用。;3、对于基金类产品（证券类别为“EU”），定义如下：;1）产品细分类别C4，“F114”表示科创板ETF，“F220”表示科创板相关LOF。;其他位预留，暂不启用。;二、交易属性区间（第41-60位）;对所有产品，定义如下：;1、盘后固定价格交易标志C1，“Y”表示支持盘后固定价格交易，“N”表示不支持盘后固定价格交易;2、其他位预留，暂不启用。;交易属性区间在本文件中不提供，在cpxx0202mmdd.txt中提供。"></field>
+      </comments>
+    </block>
+  </file>
+  <file type="fjyYYYYMMDD" description="非交易信息" pattern="fjy\d{8}" frozencolumncount="2">
+    <block>
+      <fields>
+        <field no="1" name="参考数据类型" type="C5"></field>
+        <field no="2" name="非交易证券代码" type="C6" filter="1"></field>
+        <field no="3" name="非交易证券名称" type="C8" filter="1"></field>
+        <field no="4" name="产品证券代码" type="C6" filter="1"></field>
+        <field no="5" name="产品证券名称" type="C8" filter="1"></field>
+        <field no="6" name="非交易业务类型" type="C2"></field>
+        <field no="7" name="非交易订单输入开始日期" type="C8"></field>
+        <field no="8" name="非交易订单输入结束日期" type="C8"></field>
+        <field no="9" name="非交易订单整手数" type="N12"></field>
+        <field no="10" name="非交易订单最小订单数量" type="N12"></field>
+        <field no="11" name="非交易订单的最大订单数量" type="N12"></field>
+        <field no="12" name="非交易价格" type="N13(5)"></field>
+        <field no="13" name="IPO总量" type="N16"></field>
+        <field no="14" name="IPO分配方法" type="C1"></field>
+        <field no="15" name="IPO竞价分配或比例配售日期" type="C8"></field>
+        <field no="16" name="IPO验资或配号日期" type="C8"></field>
+        <field no="17" name="IPO摇号抽签的日期" type="C8"></field>
+        <field no="18" name="IPO申购价格区间下限" type="N11(3)"></field>
+        <field no="19" name="IPO申购价格区间上限" type="N11(3)"></field>
+        <field no="20" name="IPO比例配售比例" type="N11(3)"></field>
+        <field no="21" name="配股股权登记日" type="C8"></field>
+        <field no="22" name="配股除权日" type="C8"></field>
+        <field no="23" name="配股比例" type="N11(6)"></field>
+        <field no="24" name="配股总量" type="N16"></field>
+        <field no="25" name="T-2日基金收益/基金净值" type="N13(5)"></field>
+        <field no="26" name="T-1日基金收益/基金净值" type="N13(5)"></field>
+        <field no="27" name="发行方式" type="C3"></field>
+        <field no="28" name="备注" type="C46"></field>
+      </fields>
+      <dicts>
+
+      </dicts>
+      <comments>
+        <field no="1" comments="技术实现固定值;竞价撮合平台非交易，该值固定填写为R0001;后续格式仅当参考数据类型字段为R0001时对应格式类型;后续若加入其他平台非交易数据，则该字段有新的取值，对于不同的参考数据类型取值，后续字段格式则可能不一样。"></field>
+        <field no="2" comments="非交易证券代码，如无则为空"></field>
+        <field no="3" comments="非交易证券名称"></field>
+        <field no="4" comments="产品证券代码，如无则为空"></field>
+        <field no="5" comments="产品证券名称，如无则为空"></field>
+        <field no="6" comments="非交易业务类型：;IN 上网证券发行申购;IS 老股东增发证券发行申购;PH IPO配号;KK IPO扣款;HK IPO还款;CV 可转债转股/可交换公司债换股;CR 可转债回售;R1 股票配股行权行权;R2 股票转配股配股行权;R3 职工股转配股配股行权;R4 股票配转债行权;OS 开放式基金认购;OC 开放式基金申购;OR 开放式基金赎回;OD 开放式基金分红选择;OT 开放式基金份额转出;OV 开放式基金转换;EC ETF申购;ER ETF赎回;EZ 沪市申赎资金代码;EX 非沪市申赎资金代码;BD 回购入库;BW 回购出库;FS 要约预受;FC 要约撤销;ST 余券划转;SR 还券划转;CI 担保品划入;CO 担保品划出;SI 券源划入;SO 券源划出;PA 密码激活(注销);DT 指定登记;DC 指定撤销;QT 其它;当非交易类型为PA, DT, DC时，除非交易证券代码外的其余字段无实际意义。"></field>
+        <field no="7" comments="订单输入开始日期。"></field>
+        <field no="8" comments="订单输入结束日期。"></field>
+        <field no="9" comments="整手数。指订单的数量必须为该字段取值的整数倍。"></field>
+        <field no="10" comments="非交易订单的最小订单数量。指订单的数量必须比该字段取值大。"></field>
+        <field no="11" comments="非交易订单的最大订单数量。指订单的数量必须比该字段取值小。"></field>
+        <field no="12" comments="当非交易业务类型为IN、IS时，为发行价格。当非交易业务类型为PH、KK、HK时，为产品发行价格。当非交易业务类型为FS、FC时，为要约预受和撤销的固定价格。当非交易业务类型为R1、R2、R3、R4时，为配股、配债价格。当非交易业务类型为CR时，为回售价格。当非交易业务类型为CV时，为转股/换股价格。其他非交易业务，该字段默认填写为1.00000，无实际意义。"></field>
+        <field no="13" comments="当非交易业务类型为IN、IS时，发行总量。"></field>
+        <field no="14" comments="当非交易业务类型为IN、IS时，IPO分配方法。L –摇号抽签;A -竞价分配;P –比例配售"></field>
+        <field no="15" comments="当非交易业务类型为IN、IS时，执行竞价分配或比例配售的日期。"></field>
+        <field no="16" comments="当非交易业务类型为IN、IS时，进行验资或配号的日期。"></field>
+        <field no="17" comments="当非交易业务类型为IN、IS时，进行摇号抽签的日期。"></field>
+        <field no="18" comments="当非交易业务类型为IN、IS时，IPO申购价格区间的下限。"></field>
+        <field no="19" comments="当非交易业务类型为IN、IS时，IPO申购价格区间的上限。"></field>
+        <field no="20" comments="当非交易业务类型为IN、IS时，比例配售的比例。最小值为0.001；最大值为100.000。"></field>
+        <field no="21" comments="当非交易业务类型为R1、R2、R3、R4时，配股的股权登记日。"></field>
+        <field no="22" comments="当非交易业务类型为R1、R2、R3、R4时，配股的除权日。"></field>
+        <field no="23" comments="当非交易业务类型为R1、R2、R3、R4时，配股比例。"></field>
+        <field no="24" comments="当非交易业务类型为R1、R2、R3、R4时，配股总量。"></field>
+        <field no="25" comments="当非交易业务类型为OC、OR时，如果基金类型为货币市场开放式基金申购赎回，该值为T-2日每百万份基金收益；如果基金类型为非货币市场开放式基金申购赎回，该值为T-2日每百份基金净值；"></field>
+        <field no="26" comments="当非交易业务类型为OC、OR时，如果基金类型为货币市场开放式基金申购赎回，该值为T-1日每百万份基金收益；如果基金类型为非货币市场开放式基金申购赎回，该值为T-1日每百份基金净值；"></field>
+        <field no="27" comments="当非交易业务类型为IN、IS且分配方法为L（摇号中签）时，发行方式。001-按市值限额申购;002-增发资金申购;003-信用申购;新股网上发行采用001，可转债、可交换债网上发行采用003，以上两种发行方式均取消预缴款。"></field>
+        <field no="28" comments="保留字段，用于扩展。备注中补充以下字段，每个字段根据格式定义，参照本文档txt文件对齐方式约定，字段定长，字段间以&amp;分隔。对于非交易业务类型为“EX 非沪市申赎资金代码”的记录，字段及格式定义依次为：1、市场标志C2，”SZ”表示深圳市场，”HK”表示香港市场。"></field>
+      </comments>
+    </block>
+  </file>
+  <file type="reff04" description="港股基础信息" pattern="reff04\d{4}" frozencolumncount="2">
+    <block>
+      <fields>
+        <field no="1" name="参考数据类型" type="C5"></field>
+        <field no="2" name="证券代码" type="C5"></field>
+        <field no="3" name="ISIN代码" type="C12"></field>
+        <field no="4" name="中文证券简称" type="C40"></field>
+        <field no="5" name="英文证券简称" type="C15"></field>
+        <field no="6" name="英文全称" type="C40"></field>
+        <field no="7" name="辅助证券代码" type="C5"></field>
+        <field no="8" name="市场种类" type="C4"></field>
+        <field no="9" name="证券类别" type="C4"></field>
+        <field no="10" name="货币种类" type="C3"></field>
+        <field no="11" name="货币单位" type="C1"></field>
+        <field no="12" name="面值" type="N15(8)"></field>
+        <field no="13" name="面值货币种类" type="C3"></field>
+        <field no="14" name="利息" type="N15(8)"></field>
+        <field no="15" name="上市日期" type="C8"></field>
+        <field no="16" name="买卖单位" type="N6"></field>
+        <field no="17" name="前收盘价格" type="N10(3)"></field>
+        <field no="18" name="备注" type="C50"></field>
+        <field no="19" name="产品状态信息" type="C8"></field>
+      </fields>
+      <dicts>
+
+      </dicts>
+      <comments>
+        <field no="1" comments="R0401"></field>
+        <field no="2" comments="证券代码,不足五位左补零。"></field>
+        <field no="3" comments="ISIN代码（例：HK0000000012）若该证券没有ISIN代码则填空。"></field>
+        <field no="4" comments="证券名称 （简体中文，最多8个汉字，GBK编码）"></field>
+        <field no="5" comments="英文证券简称"></field>
+        <field no="6" comments="英文证券全称"></field>
+        <field no="7" comments="权证的正股代码"></field>
+        <field no="8" comments="MAIN- 主板  GEM-创业板 ETS-扩充交易证券   NASD-Nasdaq AMX市场"></field>
+        <field no="9" comments="BOND Bond 债券；BWRT Basket Warrant 一篮子权证；EQTY equity  股本；TRST Trust  信托；WRNT Warrant  权证"></field>
+        <field no="10" comments="港币：HKD； 美元：USD；人民币：CNY；澳币：AUD；加币：CAD ; 日圆：JPY;新加坡币：SGD  ; 英镑 : GBP ; 欧元：EUR"></field>
+        <field no="11" comments="货币单位表示前收盘价格字段的单位，当货币单位取值为0时，前收盘价格=前收盘价格字段取值×10的0次幂，当货币单位取值为1时，前收盘价格=前收盘价格字段取值×10的1次幂，依次类推。"></field>
+        <field no="12" comments="股票的面值，若无面值，则为0。单位是元。整数位不超过6位。"></field>
+        <field no="13" comments="港币：HKD； 美元：USD；人民币：CNY；若该产品无面值，则该字段为空。"></field>
+        <field no="14" comments="对于债券填写交收日利息；仅针对利息通过CCASS系统来结算的债券，其他情况该字段为0."></field>
+        <field no="15" comments="在港交所首日交易日期，YYYYMMDD"></field>
+        <field no="16" comments="整手数；买卖申报数量必须是该字段的整数倍。"></field>
+        <field no="17" comments="当日除权（息）后收盘价格；（如有除权除息，为除权除息后收盘价）"></field>
+        <field no="18" comments="第一位有效 Y表示停牌 N表示非停牌；第二位有效 Y表示参与市场波动调节机制 N表示不参与；第三位有效 Y表示参与收市竞价交易时段 N表示不参与；第五至六位有效 价差代码,不足两位左补零；第七至八位有效 市场波动调节机制类别，预留，暂无数据。备注的后续字节为保留字段，无效"></field>
+        <field no="19" comments="该字段为8位字符串，左起每位表示特定的含义，无定义则填空格。第1位：无定义。 第2位：无定义。第3位：‘0’表示非标的证券，‘1’表示标的证券。"></field>
+      </comments>
+    </block>
+  </file>
+  <file type="mktdt04" description="港股实时行情" pattern="mktdt04">
+    <block header="HEADER" drop="1">
+      <fields>
+        <field no="1" name="起始标识符" type="C6"></field>
+        <field no="2" name="版本" type="C8"></field>
+        <field no="3" name="数据长度" type="N10"></field>
+        <field no="4" name="文件体记录数" type="N5"></field>
+        <field no="5" name="行情序号" type="N8"></field>
+        <field no="6" name="发送方" type="C6"></field>
+        <field no="7" name="行情文件时间" type="C21"></field>
+        <field no="8" name="发送方式" type="N1"></field>
+        <field no="9" name="市场状态" type="C8"></field>
+      </fields>
+      <comments>
+        <field no="1" comments="HEADER"></field>
+        <field no="2" comments="ITP1.00"></field>
+        <field no="3" comments="计算出的长度字段分隔符后面的字节数（不包含本字段后面的分隔符），包含其他字段后面的分隔符、换行符。(暂不填写，填空格)"></field>
+        <field no="4" comments="文件体记录数"></field>
+        <field no="5" comments="行情文件序号（预留，暂不填，填空格）"></field>
+        <field no="6" comments="发送方标示符，取 XHKG01"></field>
+        <field no="7" comments="行情时间，格式为YYYYMMDD-HH:MM:SS.000 [为每次文件更新的时间，不论是否盘中均要更新] 市场参与者系统注意根据此日期判断数据准确性，避免误用测试数据。"></field>
+        <field no="8" comments="0 = 快照Full refresh 1 = 增量Incremental（暂不支持）"></field>
+        <field no="9" comments="0 = 全日收市;1 = 输入买卖盘(开盘集合竞价时段);2 = 对盘(开盘集合竞价时段);3 = 持续交易;4 = 对盘(收盘集合竞价时段);5 = 输入买卖盘(收盘集合竞价时段);7 = 暂停;100 = 未开市;101 = 不可取消 (开盘集合竞价时段);102 = Exchange Intervention;103 = 收市;104 = 取消买卖盘;105 = 参考价定价(收盘集合竞价时段);106 = 不可取消(收盘集合竞价时段);107 = 随机收市(收盘集合竞价时段);108 = 随机对盘(开盘集合竞价时段);注：请参阅附表有关各个市场状态的详细解释"></field>
+      </comments>
+    </block>
+    <block header="MD401" name="港股通证券行情数据" frozencolumncount="1">
+      <fields>
+        <field no="1" name="行情数据类型" type="C5"></field>
+        <field no="2" name="证券代码" type="C5"></field>
+        <field no="3" name="中文证券简称" type="C32"></field>
+        <field no="4" name="英文证券简称" type="C15"></field>
+        <field no="5" name="成交数量" type="N16"></field>
+        <field no="6" name="成交金额" type="N16(3)"></field>
+        <field no="7" name="昨日收盘价" type="N11(3)"></field>
+        <field no="8" name="按盘价" type="N11(3)"></field>
+        <field no="9" name="最高价" type="N11(3)"></field>
+        <field no="10" name="最低价" type="N11(3)"></field>
+        <field no="11" name="最新价" type="N11(3)"></field>
+        <field no="12" name="申买价一" type="N11(3)"></field>
+        <field no="13" name="申买量一" type="N12"></field>
+        <field no="14" name="申卖价一" type="N11(3)"></field>
+        <field no="15" name="申卖量一" type="N12"></field>
+        <field no="16" name="证券交易状态" type="C8"></field>
+        <field no="17" name="行情时间" type="C12"></field>
+      </fields>
+      <comments>
+        <field no="1" comments="行情数据类型标识符，取值；MD401 表示为港股通证券行情数据格式"></field>
+        <field no="2" comments="证券代码,不足五位左补零。例：00012;(对应MMDH定义域名：SecurityCode);注：本接口中MMDH对应关系仅供参考。"></field>
+        <field no="3" comments="中文证券简称 [简体中文，最多8个汉字，UTF-16LE编码（每个汉字编码可为２至４个字符](注意汉字编码可能包含分隔符、换行符);(对应MMDH定义域名：SecurityNameGB)"></field>
+        <field no="4" comments="英文证券简称[最多15位];(对应MMDH定义域名：SecurityShortName)"></field>
+        <field no="5" comments="(对应MMDH定义域名：SharesTraded)"></field>
+        <field no="6" comments="(对应MMDH定义域名：Turnover)"></field>
+        <field no="7" comments="(对应MMDH定义域名：PreviousClosingPrice)"></field>
+        <field no="8" comments="收市竞价交易时段开始时为参考价格;收市后为收市价;其余时段为按盘价;(对应MMDH定义域名：NominalPrice)"></field>
+        <field no="9" comments="全日最高价;(对应MMDH定义域名：HighPrice)"></field>
+        <field no="10" comments="全日最低价;(对应MMDH定义域名：LowPrice)"></field>
+        <field no="11" comments="最新成交价;(对应MMDH定义域名：LastPrice)"></field>
+        <field no="12" comments="最佳买入价;集合竞价时段内，;- 已有参考平衡价格(BuyPrice1等于SellPrice1并为非零的情况下)，为参考平衡价格；;- 未有参考平衡价格：已有买盘，为最佳买入价，否则为零;(对应MMDH定义域名：BidPrice1)"></field>
+        <field no="13" comments="最佳买入价的申买量;集合竞价时段内，;- 已有参考平衡价格(BuyPrice1等于SellPrice1并为非零的情况下)，为参考平衡成交量；;- 未有参考平衡价格：已有买盘，为最佳买入价的申买量，否则为零;(对应MMDH定义域名：AggregateBidQuantity1)"></field>
+        <field no="14" comments="最佳卖出价;集合竞价时段内，;- 已有参考平衡价格(BuyPrice1等于SellPrice1并为非零的情况下)，为参考平衡价格；;- 未有参考平衡价格：已有卖盘，为最佳卖出价，否则为零;(对应MMDH定义域名：AskPrice1)"></field>
+        <field no="15" comments="最佳卖出价的申卖量;集合竞价时段内，;- 已有参考平衡价格(BuyPrice1等于SellPrice1并为非零的情况下)，为参考平衡成交量；;- 未有参考平衡价格：已有卖盘，为最佳卖出价的申卖量，否则为零;(对应MMDH定义域名：AggregateAskQuantity1)"></field>
+        <field no="16" comments="第0位：‘0’表示正常，‘1’表示暂停交易。(对应MMDH定义域名：SecurityTradingStatus)"></field>
+        <field no="17" comments="HH:MM:SS.000 为此证券行情最近的更新时间 一般盘前或当天收市价更新后，此更新时间固定不变。"></field>
+      </comments>
+    </block>
+    <block header="MD404" name="港股通证券市调机制(VCM)信息">
+      <fields>
+        <field no="1" name="行情数据类型" type="C5"></field>
+        <field no="2" name="证券代码" type="C5"></field>
+        <field no="3" name="中文证券简称" type="C32"></field>
+        <field no="4" name="英文证券简称" type="C16"></field>
+        <field no="5" name="市调机制开始时间" type="C8"></field>
+        <field no="6" name="市调机制结束时间" type="C8"></field>
+        <field no="7" name="市调机制参考价" type="N11(3)"></field>
+        <field no="8" name="市调机制下限价" type="N11(3)"></field>
+        <field no="9" name="市调机制上限价" type="N11(3)"></field>
+        <field no="10" name="行情时间" type="C12"></field>
+      </fields>
+      <comments>
+        <field no="1" comments="行情数据类型标识符，取值；MD404 表示为港股通证券市调机制(VCM)数据格式；(只包含于交易时段内，因VCM被触发而启动冷静期之港股通证券的相关信息)"></field>
+        <field no="2" comments="证券代码,不足五位左补零。"></field>
+        <field no="3" comments="中文证券简称[简体中文，最多8个汉字，UTF-16LE编码（每个汉字编码可为２至４个字符]"></field>
+        <field no="4" comments="英文证券简称[最多15位]"></field>
+        <field no="5" comments="VCM冷靜期开始的时间"></field>
+        <field no="6" comments="VCM冷靜期结束的时间HH:MM:SS"></field>
+        <field no="7" comments="VCM冷靜期內的参考价格 (对应MMDH定义域名：VCMReferencePrice)"></field>
+        <field no="8" comments="VCM冷靜期內的价格下限 (对应MMDH定义域名：VCMLowerPrice)"></field>
+        <field no="9" comments="VCM冷靜期內的价格上限 (对应MMDH定义域名：VCMUpperPrice)"></field>
+        <field no="10" comments="HH:MM:SS.000 为此港股通证券VCM信息最近的更新时间"></field>
+      </comments>
+    </block>
+    <block header="MD405" name="MD405 - 港股通证券收市竞价交易时段(CAS)信息">
+      <fields>
+        <field no="1" name="行情数据类型" type="C5"></field>
+        <field no="2" name="证券代码" type="C5"></field>
+        <field no="3" name="中文证券简称" type="C32"></field>
+        <field no="4" name="英文证券简称" type="C16"></field>
+        <field no="5" name="收盘集合竞价时段参考价" type="N11(3)"></field>
+        <field no="6" name="收盘集合竞价时段下限价" type="N11(3)"></field>
+        <field no="7" name="收盘集合竞价时段上限价" type="N11(3)"></field>
+        <field no="8" name="不能配对买卖盘方向" type="C1"></field>
+        <field no="9" name="不能配对买卖盘量" type="N12"></field>
+        <field no="10" name="行情时间" type="C12"></field>
+      </fields>
+      <comments>
+        <field no="1" comments="行情数据类型标识符，取值MD405 表示为港股通证券收市竞价交易时段(CAS)数据格式;(于收市竞价交易时段开始发放及只包含CAS涵盖的港股通证券的相关信息)"></field>
+        <field no="2" comments="证券代码,不足五位左补零。"></field>
+        <field no="3" comments="中文证券简称[简体中文，最多8个汉字，UTF-16LE编码（每个汉字编码可为２至４个字符]"></field>
+        <field no="4" comments="英文证券简称[最多15位]"></field>
+        <field no="5" comments="CAS的参考价格 (对应MMDH定义域名：ReferecePrice)"></field>
+        <field no="6" comments="CAS的价格下限"></field>
+        <field no="7" comments="CAS的价格上限(CAS涵盖的证券适用)"></field>
+        <field no="8" comments="CAS未能配对买卖盘的方向;N = 买卖盘量相等;B = 买盘比卖盘多;S = 卖盘比买盘多;&lt;空格&gt; = 不适用(未有参考平衡价格);(对应MMDH定义域名：OrderImbalanceDirection)"></field>
+        <field no="9" comments="CAS未能配对买卖盘的数量;(对应MMDH定义域名：OrderImbalanceQuantity)"></field>
+        <field no="10" comments="HH:MM:SS.000 为此港股通证券收市竞价交易时段信息最近的更新时间 当天收市价更新后，此更新时间固定不变。"></field>
+      </comments>
+    </block>
+    <block header="MD406" name="MD406 - 港股通证券开市竞价交易时段(POS)数据">
+      <fields>
+        <field no="1" name="行情数据类型" type="C5"></field>
+        <field no="2" name="证券代码" type="C5"></field>
+        <field no="3" name="中文证券简称" type="C32"></field>
+        <field no="4" name="英文证券简称" type="C15"></field>
+        <field no="5" name="开盘集合竞价时段参考价" type="N11(3)"></field>
+        <field no="6" name="开盘集合竞价时段买盘下限价" type="N11(3)"></field>
+        <field no="7" name="开盘集合竞价时段买盘上限价" type="N11(3)"></field>
+        <field no="8" name="开盘集合竞价时段卖盘下限价" type="N11(3)"></field>
+        <field no="9" name="开盘集合竞价时段卖盘上限价" type="N11(3)"></field>
+        <field no="10" name="不能配对买卖盘方向" type="C1"></field>
+        <field no="11" name="不能配对买卖盘量" type="N12"></field>
+        <field no="12" name="行情时间" type="C12"></field>
+      </fields>
+      <comments>
+        <field no="1" comments="行情数据类型标识符，取值;MD406 表示为港股通证券开市竞价交易时段(POS)数据格式;(只于开市竞价交易时段发放及只包含POS涵盖的港股通证券的相关信息)"></field>
+        <field no="2" comments="证券代码,不足五位左补零。"></field>
+        <field no="3" comments="中文证券简称[简体中文，最多8个汉字，UTF-16LE编码（每个汉字编码可为２至４个字符]"></field>
+        <field no="4" comments="英文证券简称[最多15位]"></field>
+        <field no="5" comments="POS的参考价格, 于不可取消(开盘集合竞价时段)提供, 之前數值为0"></field>
+        <field no="6" comments="POS买盘的价格下限"></field>
+        <field no="7" comments="POS买盘的价格上限"></field>
+        <field no="8" comments="POS卖盘的价格下限"></field>
+        <field no="9" comments="POS卖盘的价格上限"></field>
+        <field no="10" comments="POS未能配对买卖盘的方向；CAS未能配对买卖盘的方向;N = 买卖盘量相等;B = 买盘比卖盘多;S = 卖盘比买盘多;&lt;空格&gt; = 不适用(未有参考平衡价格);"></field>
+        <field no="11" comments="POS未能配对买卖盘的数量"></field>
+        <field no="12" comments="HH:MM:SS.000"></field>
+      </comments>
+    </block>
+    <block header="TRAILER" drop="1">
+      <fields>
+        <field no="1" name="结束标识符" type="C7"/>
+        <field no="2" name="校验和" type="C3"/>
+      </fields>
+      <comments>
+      </comments>
+    </block>
+  </file>
+</files>
+
