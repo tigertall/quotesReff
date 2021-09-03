@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <files ver="20210831">
-  <file type="cpxx02" description="产品信息" pattern="cpxx02\d{6}" frozencolumncount="1">
-    <block>
+  <file type="cpxx02" description="产品信息" pattern="cpxx02\d{6}">
+    <block frozencolumncount="1">
       <fields>
         <field no="1" name="证券代码" type="C6" filter="1"></field>
         <field no="2" name="ISIN代码" type="C12" hidden="1"></field>
@@ -78,8 +78,8 @@
       </comments>
     </block>
   </file>
-  <file type="fjyYYYYMMDD" description="非交易信息" pattern="fjy\d{8}" frozencolumncount="2">
-    <block>
+  <file type="fjyYYYYMMDD" description="非交易信息" pattern="fjy\d{8}">
+    <block frozencolumncount="2">
       <fields>
         <field no="1" name="参考数据类型" type="C5"></field>
         <field no="2" name="非交易证券代码" type="C6" filter="1"></field>
@@ -145,8 +145,8 @@
       </comments>
     </block>
   </file>
-  <file type="reff04" description="港股基础信息" pattern="reff04\d{4}" frozencolumncount="2">
-    <block>
+  <file type="reff04" description="港股基础信息" pattern="reff04\d{4}">
+    <block frozencolumncount="2">
       <fields>
         <field no="1" name="参考数据类型" type="C5"></field>
         <field no="2" name="证券代码" type="C5"></field>
@@ -223,7 +223,7 @@
       <fields>
         <field no="1" name="行情数据类型" type="C5"></field>
         <field no="2" name="证券代码" type="C5"></field>
-        <field no="3" name="中文证券简称" type="C32"></field>
+        <field no="3" name="中文证券简称" type="C32" encoding="UTF-16LE"></field>
         <field no="4" name="英文证券简称" type="C15"></field>
         <field no="5" name="成交数量" type="N16"></field>
         <field no="6" name="成交金额" type="N16(3)"></field>
@@ -263,8 +263,8 @@
       <fields>
         <field no="1" name="行情数据类型" type="C5"></field>
         <field no="2" name="证券代码" type="C5"></field>
-        <field no="3" name="中文证券简称" type="C32"></field>
-        <field no="4" name="英文证券简称" type="C16"></field>
+        <field no="3" name="中文证券简称" type="C32" encoding="UTF-16LE"></field>
+        <field no="4" name="英文证券简称" type="C15"></field>
         <field no="5" name="市调机制开始时间" type="C8"></field>
         <field no="6" name="市调机制结束时间" type="C8"></field>
         <field no="7" name="市调机制参考价" type="N11(3)"></field>
@@ -289,8 +289,8 @@
       <fields>
         <field no="1" name="行情数据类型" type="C5"></field>
         <field no="2" name="证券代码" type="C5"></field>
-        <field no="3" name="中文证券简称" type="C32"></field>
-        <field no="4" name="英文证券简称" type="C16"></field>
+        <field no="3" name="中文证券简称" type="C32" encoding="UTF-16LE"></field>
+        <field no="4" name="英文证券简称" type="C15"></field>
         <field no="5" name="收盘集合竞价时段参考价" type="N11(3)"></field>
         <field no="6" name="收盘集合竞价时段下限价" type="N11(3)"></field>
         <field no="7" name="收盘集合竞价时段上限价" type="N11(3)"></field>
@@ -315,7 +315,7 @@
       <fields>
         <field no="1" name="行情数据类型" type="C5"></field>
         <field no="2" name="证券代码" type="C5"></field>
-        <field no="3" name="中文证券简称" type="C32"></field>
+        <field no="3" name="中文证券简称" type="C32" encoding="UTF-16LE"></field>
         <field no="4" name="英文证券简称" type="C15"></field>
         <field no="5" name="开盘集合竞价时段参考价" type="N11(3)"></field>
         <field no="6" name="开盘集合竞价时段买盘下限价" type="N11(3)"></field>

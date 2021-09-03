@@ -19,7 +19,7 @@
             <RowDefinition Height="400"/>
             <RowDefinition Height="5"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="20"/>
+            <RowDefinition Height="23"/>
         </Grid.RowDefinitions>
         <Menu>
             <MenuItem Header="文件(_F)">
@@ -32,8 +32,8 @@
         <TextBox x:Name="tbFile" HorizontalAlignment="Left" Margin="70,0,0,0" Text="C:\Users\041842\Desktop\cpxx02020831.txt" VerticalAlignment="Center" Width="400" Grid.Row="1" Grid.ColumnSpan="2"/>
         <Button x:Name="btnFile" Grid.Row="1" Content="解析" HorizontalAlignment="Left" Click="Button_Click" Margin="500,0,0,0" VerticalAlignment="Center" Grid.Column="1"/>
         <Label Grid.Row="2" x:Name="lbFuncList" Content="过滤" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <TextBox Grid.Row="2" x:Name="tbFilterText" HorizontalAlignment="Left" Margin="50,0,0,0" Text="" VerticalAlignment="Center" Width="200" KeyUp="tbFilterText_KeyUp" IsEnabled="False"/>
-        <TabControl Grid.Row="3">
+        <TextBox Grid.Row="2" x:Name="tbFilterText" HorizontalAlignment="Left" Margin="50,0,0,0" Text="" VerticalAlignment="Center" Width="200" KeyUp="TbFilterText_KeyUp" IsEnabled="False"/>
+        <TabControl x:Name="tbcBlock" Grid.Row="3">
             <TabControl.Resources>
                 <Style TargetType="TabItem">
                     <Setter Property="Template">
@@ -50,7 +50,7 @@
                 </Style>
             </TabControl.Resources>
             <TabItem Header="TabItem">
-                <DataGrid ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" Grid.Row="3" x:Name="dataGrid" AutoGenerateColumns="False" IsReadOnly="True" SelectionUnit="CellOrRowHeader" HorizontalAlignment="Left" AlternationCount="2" GridLinesVisibility="All" SelectedCellsChanged="dataGrid_SelectedCellsChanged" AlternatingRowBackground="#cfe2f3" FontFamily="Microsoft YaHei" FontWeight="Normal" VerticalGridLinesBrush="#FFDADADA" HorizontalGridLinesBrush="#FFDADADA" ItemsSource="{Binding quotesItems}" AllowDrop="True">
+                <DataGrid ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" Grid.Row="3" x:Name="dataGrid" AutoGenerateColumns="False" IsReadOnly="True" SelectionUnit="CellOrRowHeader" HorizontalAlignment="Left" AlternationCount="2" GridLinesVisibility="All" SelectedCellsChanged="DataGrid_SelectedCellsChanged" AlternatingRowBackground="#cfe2f3" FontFamily="Microsoft YaHei" FontWeight="Normal" VerticalGridLinesBrush="#FFDADADA" HorizontalGridLinesBrush="#FFDADADA" ItemsSource="{Binding quotesItems}" AllowDrop="True">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="编号" Width="80" Binding="{Binding}"/>
                         <DataGridTextColumn Header="包序列号" Width="*"  Binding="{Binding}"/>
@@ -58,7 +58,7 @@
                 </DataGrid>
             </TabItem>
             <TabItem Header="TabItem" Visibility="Hidden">
-                <DataGrid ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" Grid.Row="3" x:Name="dataGrid2" AutoGenerateColumns="False" IsReadOnly="True" SelectionUnit="CellOrRowHeader" HorizontalAlignment="Left" AlternationCount="2" GridLinesVisibility="All" SelectedCellsChanged="dataGrid_SelectedCellsChanged" AlternatingRowBackground="#cfe2f3" FontFamily="Microsoft YaHei" FontWeight="Normal" VerticalGridLinesBrush="#FFDADADA" HorizontalGridLinesBrush="#FFDADADA" ItemsSource="{Binding quotesItems}" AllowDrop="True">
+                <DataGrid ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" Grid.Row="3" x:Name="dataGrid2" AutoGenerateColumns="False" IsReadOnly="True" SelectionUnit="CellOrRowHeader" HorizontalAlignment="Left" AlternationCount="2" GridLinesVisibility="All" SelectedCellsChanged="DataGrid_SelectedCellsChanged" AlternatingRowBackground="#cfe2f3" FontFamily="Microsoft YaHei" FontWeight="Normal" VerticalGridLinesBrush="#FFDADADA" HorizontalGridLinesBrush="#FFDADADA" ItemsSource="{Binding quotesItems}" AllowDrop="True">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="编号" Width="80" Binding="{Binding}"/>
                         <DataGridTextColumn Header="包序列号" Width="*"  Binding="{Binding}"/>
@@ -66,7 +66,7 @@
                 </DataGrid>
             </TabItem>
             <TabItem Header="TabItem" Visibility="Hidden">
-                <DataGrid ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" Grid.Row="3" x:Name="dataGrid3" AutoGenerateColumns="False" IsReadOnly="True" SelectionUnit="CellOrRowHeader" HorizontalAlignment="Left" AlternationCount="2" GridLinesVisibility="All" SelectedCellsChanged="dataGrid_SelectedCellsChanged" AlternatingRowBackground="#cfe2f3" FontFamily="Microsoft YaHei" FontWeight="Normal" VerticalGridLinesBrush="#FFDADADA" HorizontalGridLinesBrush="#FFDADADA" ItemsSource="{Binding quotesItems}" AllowDrop="True">
+                <DataGrid ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" Grid.Row="3" x:Name="dataGrid3" AutoGenerateColumns="False" IsReadOnly="True" SelectionUnit="CellOrRowHeader" HorizontalAlignment="Left" AlternationCount="2" GridLinesVisibility="All" SelectedCellsChanged="DataGrid_SelectedCellsChanged" AlternatingRowBackground="#cfe2f3" FontFamily="Microsoft YaHei" FontWeight="Normal" VerticalGridLinesBrush="#FFDADADA" HorizontalGridLinesBrush="#FFDADADA" ItemsSource="{Binding quotesItems}" AllowDrop="True">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="编号" Width="80" Binding="{Binding}"/>
                         <DataGridTextColumn Header="包序列号" Width="*"  Binding="{Binding}"/>
@@ -74,7 +74,7 @@
                 </DataGrid>
             </TabItem>
             <TabItem Header="TabItem" Visibility="Hidden">
-                <DataGrid ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" Grid.Row="3" x:Name="dataGrid4" AutoGenerateColumns="False" IsReadOnly="True" SelectionUnit="CellOrRowHeader" HorizontalAlignment="Left" AlternationCount="2" GridLinesVisibility="All" SelectedCellsChanged="dataGrid_SelectedCellsChanged" AlternatingRowBackground="#cfe2f3" FontFamily="Microsoft YaHei" FontWeight="Normal" VerticalGridLinesBrush="#FFDADADA" HorizontalGridLinesBrush="#FFDADADA" ItemsSource="{Binding quotesItems}" AllowDrop="True">
+                <DataGrid ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" Grid.Row="3" x:Name="dataGrid4" AutoGenerateColumns="False" IsReadOnly="True" SelectionUnit="CellOrRowHeader" HorizontalAlignment="Left" AlternationCount="2" GridLinesVisibility="All" SelectedCellsChanged="DataGrid_SelectedCellsChanged" AlternatingRowBackground="#cfe2f3" FontFamily="Microsoft YaHei" FontWeight="Normal" VerticalGridLinesBrush="#FFDADADA" HorizontalGridLinesBrush="#FFDADADA" ItemsSource="{Binding quotesItems}" AllowDrop="True">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="编号" Width="80" Binding="{Binding}"/>
                         <DataGridTextColumn Header="包序列号" Width="*"  Binding="{Binding}"/>
@@ -82,7 +82,7 @@
                 </DataGrid>
             </TabItem>
             <TabItem Header="TabItem" Visibility="Hidden">
-                <DataGrid ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" Grid.Row="3" x:Name="dataGrid5" AutoGenerateColumns="False" IsReadOnly="True" SelectionUnit="CellOrRowHeader" HorizontalAlignment="Left" AlternationCount="2" GridLinesVisibility="All" SelectedCellsChanged="dataGrid_SelectedCellsChanged" AlternatingRowBackground="#cfe2f3" FontFamily="Microsoft YaHei" FontWeight="Normal" VerticalGridLinesBrush="#FFDADADA" HorizontalGridLinesBrush="#FFDADADA" ItemsSource="{Binding quotesItems}" AllowDrop="True">
+                <DataGrid ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" Grid.Row="3" x:Name="dataGrid5" AutoGenerateColumns="False" IsReadOnly="True" SelectionUnit="CellOrRowHeader" HorizontalAlignment="Left" AlternationCount="2" GridLinesVisibility="All" SelectedCellsChanged="DataGrid_SelectedCellsChanged" AlternatingRowBackground="#cfe2f3" FontFamily="Microsoft YaHei" FontWeight="Normal" VerticalGridLinesBrush="#FFDADADA" HorizontalGridLinesBrush="#FFDADADA" ItemsSource="{Binding quotesItems}" AllowDrop="True">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="编号" Width="80" Binding="{Binding}"/>
                         <DataGridTextColumn Header="包序列号" Width="*"  Binding="{Binding}"/>
@@ -95,7 +95,8 @@
         <RichTextBox Grid.Row="5" x:Name="rbInfo" IsReadOnly="True" Block.LineHeight="6"/>
         <StatusBar Grid.Row="6">
             <StatusBarItem x:Name="sbiInfo" Content="文件记录数" Width="150"/>
-            <StatusBarItem x:Name="sbiInfo1" Content="copyleft 2021@小浣熊 " Width="150" HorizontalAlignment="Right" HorizontalContentAlignment="Right"/>
+            <StatusBarItem x:Name="sbError" Content="" Width="400" Foreground="Red"/>
+            <StatusBarItem x:Name="sbiInfoRight" Content="copyleft 2021@小浣熊 " Width="150" HorizontalAlignment="Right" HorizontalContentAlignment="Right"/>
         </StatusBar>
     </Grid>
 </Window>

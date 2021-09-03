@@ -54,8 +54,6 @@ namespace CPXX
             frozencolumncount = 0;
             drop = false;
             file_cols = new List<FileCol>();
-
-
         }
 
         public int GetRowLength()
@@ -81,6 +79,7 @@ namespace CPXX
         public bool col_canfilter;
         public bool col_hidden;
         public string col_comments;
+        public Encoding col_encoding;
 
         public FileCol(string colNo, string colName, string colTypeDesc, bool colFilter=false, bool colHidden=false)
         {
@@ -92,18 +91,18 @@ namespace CPXX
 
             if (indexLeft != -1)
             {
-                col_length = int.Parse(colTypeDesc.Substring(1, indexLeft - 1));
-                col_scale = int.Parse(colTypeDesc.Substring(indexLeft + 1, indexRight - indexLeft - 1));
+                col_length = int.Parse(colTypeDesc[1..indexLeft]);
+                col_scale = int.Parse(colTypeDesc[(indexLeft + 1)..indexRight]);
             } 
             else
             {
-                col_length = int.Parse(colTypeDesc.Substring(1));
+                col_length = int.Parse(colTypeDesc[1..]);
                 col_scale = 0;
             }
 
             col_canfilter = colFilter;
             col_hidden = colHidden;
-
+            col_comments = string.Empty;
         }
 
     }
@@ -119,19 +118,16 @@ namespace CPXX
 
             //使用CodePagesEncodingProvider去注册扩展编码。
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-            encGBK = Encoding.GetEncoding("GBK");
-            enc8 = Encoding.UTF8;
-            enc16 = new();
             // 加载文件格式定义
             LoadDefine();
             dataGrid.ItemsSource = quotesItems;
         }
 
         readonly List<FileDefine> fileDefines = new();
+
         // 保存数据条目
-        ObservableCollection<ExpandoObject> quotesItems = new();
-        Encoding encGBK, enc8;
-        UnicodeEncoding enc16;
+        readonly ObservableCollection<ExpandoObject> quotesItems = new();
+        readonly Dictionary<BlockDefine, ObservableCollection<ExpandoObject>> blDict = new();
 
         string filterText = string.Empty;
         private FileDefine fdefine;
@@ -145,6 +141,7 @@ namespace CPXX
             XmlReader reader = XmlReader.Create("FileDefine.xml", sett);
             doc.Load(reader);
 
+            Encoding encGBK = Encoding.GetEncoding("GBK"); ;
             XmlNode xn = doc.SelectSingleNode("files");
             foreach (XmlNode fl in xn.ChildNodes)  // 遍历file
             {
@@ -161,11 +158,7 @@ namespace CPXX
                     bdefine.header = x.Attributes["header"] !=null ? x.Attributes["header"].InnerText: string.Empty;
                     bdefine.name = x.Attributes["name"] != null ? x.Attributes["name"].InnerText : string.Empty;
                     bdefine.frozencolumncount = x.Attributes["frozencolumncount"] != null ? int.Parse(x.Attributes["frozencolumncount"].InnerText) : 0;
-
-                    if (x.Attributes["drop"] != null)
-                    {
-                        bdefine.drop = x.Attributes["drop"].InnerText == "1";
-                    }
+                    bdefine.drop = x.Attributes["drop"] != null && x.Attributes["drop"].InnerText == "1";
 
                     string colName;
                     XmlNode fn = x.SelectSingleNode("fields");
@@ -176,14 +169,15 @@ namespace CPXX
 
                         FileCol col = new(f.Attributes["no"].InnerText, colName, f.Attributes["type"].InnerText);
 
-                        if (f.Attributes["hidden"] != null)
+                        col.col_hidden = f.Attributes["hidden"] != null && f.Attributes["hidden"].InnerText == "1";
+                        col.col_canfilter = f.Attributes["filter"] != null && f.Attributes["filter"].InnerText == "1";
+                        col.col_encoding = encGBK;
+                        if (f.Attributes["encoding"] != null)
                         {
-                            col.col_hidden = f.Attributes["hidden"].InnerText == "1";
-                        }
-
-                        if (f.Attributes["filter"] != null)
-                        {
-                            col.col_canfilter = f.Attributes["filter"].InnerText == "1";
+                            if(f.Attributes["encoding"].InnerText == "UTF16-LE")
+                            {
+                                col.col_encoding = Encoding.Unicode;
+                            }
                         }
 
                         bdefine.file_cols.Add(col);
@@ -222,6 +216,22 @@ namespace CPXX
                 return;
             }
 
+            // 读取 cpxx02/reff/fjyYYYMMDD/mktdt04
+            bool bRes = ParseFile(filename);
+            if (!bRes)
+            {
+                return;
+            }
+
+            // 构建tabcontrol和datagrid视图
+            int i = 0;
+            foreach(BlockDefine bd in blDict.Keys)
+            {
+                (tbcBlock.Items[i] as TabItem).Visibility = Visibility.Visible;
+                i++;
+            }
+
+
             BlockDefine bdefine = fdefine.blockDefines[0];
 
             // 没有列启用了filter属性，不支持过滤
@@ -229,6 +239,7 @@ namespace CPXX
             tbFilterText.IsEnabled = canFilter;
 
             btnFile.IsEnabled = false;
+            sbError.Content = string.Empty;
 
             // 定义头
             quotesItems.Clear();
@@ -251,31 +262,52 @@ namespace CPXX
                 });
             }
 
-            // 读取 reff/fjy
-            _ = ParseFile(filename);
-
-            // 读取mktdt04
-
             sbiInfo.Content = "文件记录数：" + quotesItems.Count;
             btnFile.IsEnabled = true;
         }
 
         private bool ParseFile(string filename)
         {
-            BlockDefine bdefine = fdefine.blockDefines[0];
+            // 数据存放定义
+            blDict.Clear();
+
+            // 找到最长的头，用于定位数据类型
+            // 先按照最长的读取，然后按照字串截取判断跟哪一个block一致
+            int headerLength = 0;
+            fdefine.blockDefines.ForEach(x => { 
+                if (x.header.Length > headerLength)
+                { 
+                    headerLength = x.header.Length; 
+                }
+            });
 
             // 读取文件内容
             byte[] info = File.ReadAllBytes(filename);
+            string header;
             int n = 0;
             string colName, colValue;
+            BlockDefine bdefine;
+            ObservableCollection<ExpandoObject> blockItems;
             while (n < info.Length)
             {
-                // 分解行列
+                // 定位合适的头，现在都是英文，都用UTF-8先看下
+                header = Encoding.UTF8.GetString(info, n, headerLength);
+                bdefine = fdefine.blockDefines.Find(x => { 
+                    return x.header.StartsWith(header.Substring(0, x.header.Length)); 
+                });
+
+                if (bdefine == null)
+                {
+                    sbError.Content = string.Format("未识别的文件结构！{0} 位置{1}", header, n);
+                    return false;
+                }
+
+                // 尝试读取一段数据，一般是一行
                 dynamic item = new ExpandoObject();
                 foreach (FileCol c in bdefine.file_cols)
                 {
                     colName = c.col_name;
-                    colValue = encGBK.GetString(info, n, c.col_length); // 获取值
+                    colValue = c.col_encoding.GetString(info, n, c.col_length); // 获取值
                     n += c.col_length;
                     n += 1;  // |分隔符和行尾换行
 
@@ -291,10 +323,21 @@ namespace CPXX
                         colValue = colValue.Trim();
                     }
 
-
                     (item as IDictionary<string, object>).Add(colName, colValue);
                 }
-                quotesItems.Add(item);
+
+                if (bdefine.drop)  // 配置为丢弃处理的话，直接扔掉
+                {
+                    continue;
+                }
+
+                // 如果是新出现的block，那么构建存放的集合
+                if (!blDict.ContainsKey(bdefine))
+                {
+                    blDict.Add(bdefine, new());
+                }
+                blockItems = blDict[bdefine];
+                blockItems.Add(item);
             }
 
             return true;
@@ -318,7 +361,7 @@ namespace CPXX
             LoadFile(tbFile.Text);
         }
 
-        private void tbFilterText_KeyUp(object sender, KeyEventArgs e)
+        private void TbFilterText_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.Key != Key.Enter)
             {
@@ -350,7 +393,7 @@ namespace CPXX
             return false;
         }
 
-        private void dataGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        private void DataGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
             if (e.AddedCells == null || e.AddedCells.Count == 0)
             {
