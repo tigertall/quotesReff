@@ -38,9 +38,6 @@
         <field no="32" name="中文证券名称（长）" type="C32"></field>
         <field no="33" name="备注" type="C100"></field>
       </fields>
-      <dicts>
-      
-      </dicts>
       <comments>
         <field no="1" comments="在show2003.dbf中为非交易业务（比如发行业务）而挂牌的“证券代码”（比如780***），没有对应的产品基础信息数据记录，有关属性通过非交易信息文件获取。"></field>
         <field no="2" comments="ISIN代码（预留）。"></field>
@@ -110,9 +107,6 @@
         <field no="27" name="发行方式" type="C3"></field>
         <field no="28" name="备注" type="C46"></field>
       </fields>
-      <dicts>
-
-      </dicts>
       <comments>
         <field no="1" comments="技术实现固定值;竞价撮合平台非交易，该值固定填写为R0001;后续格式仅当参考数据类型字段为R0001时对应格式类型;后续若加入其他平台非交易数据，则该字段有新的取值，对于不同的参考数据类型取值，后续字段格式则可能不一样。"></field>
         <field no="2" comments="非交易证券代码，如无则为空"></field>
@@ -168,9 +162,6 @@
         <field no="18" name="备注" type="C50"></field>
         <field no="19" name="产品状态信息" type="C8"></field>
       </fields>
-      <dicts>
-
-      </dicts>
       <comments>
         <field no="1" comments="R0401"></field>
         <field no="2" comments="证券代码,不足五位左补零。"></field>
@@ -219,10 +210,10 @@
         <field no="9" comments="0 = 全日收市;1 = 输入买卖盘(开盘集合竞价时段);2 = 对盘(开盘集合竞价时段);3 = 持续交易;4 = 对盘(收盘集合竞价时段);5 = 输入买卖盘(收盘集合竞价时段);7 = 暂停;100 = 未开市;101 = 不可取消 (开盘集合竞价时段);102 = Exchange Intervention;103 = 收市;104 = 取消买卖盘;105 = 参考价定价(收盘集合竞价时段);106 = 不可取消(收盘集合竞价时段);107 = 随机收市(收盘集合竞价时段);108 = 随机对盘(开盘集合竞价时段);注：请参阅附表有关各个市场状态的详细解释"></field>
       </comments>
     </block>
-    <block header="MD401" name="港股通证券行情数据" frozencolumncount="1">
+    <block header="MD401" name="港股通证券行情数据" frozencolumncount="2">
       <fields>
         <field no="1" name="行情数据类型" type="C5"></field>
-        <field no="2" name="证券代码" type="C5"></field>
+        <field no="2" name="证券代码" type="C5" filter="1"></field>
         <field no="3" name="中文证券简称" type="C32" encoding="UTF-16LE"></field>
         <field no="4" name="英文证券简称" type="C15"></field>
         <field no="5" name="成交数量" type="N16"></field>
@@ -259,10 +250,10 @@
         <field no="17" comments="HH:MM:SS.000 为此证券行情最近的更新时间 一般盘前或当天收市价更新后，此更新时间固定不变。"></field>
       </comments>
     </block>
-    <block header="MD404" name="港股通证券市调机制(VCM)信息">
+    <block header="MD404" name="港股通证券市调机制(VCM)信息" frozencolumncount="2">
       <fields>
         <field no="1" name="行情数据类型" type="C5"></field>
-        <field no="2" name="证券代码" type="C5"></field>
+        <field no="2" name="证券代码" type="C5" filter="1"></field>
         <field no="3" name="中文证券简称" type="C32" encoding="UTF-16LE"></field>
         <field no="4" name="英文证券简称" type="C15"></field>
         <field no="5" name="市调机制开始时间" type="C8"></field>
@@ -285,10 +276,10 @@
         <field no="10" comments="HH:MM:SS.000 为此港股通证券VCM信息最近的更新时间"></field>
       </comments>
     </block>
-    <block header="MD405" name="MD405 - 港股通证券收市竞价交易时段(CAS)信息">
+    <block header="MD405" name="港股通证券收市竞价交易时段(CAS)信息" frozencolumncount="2">
       <fields>
         <field no="1" name="行情数据类型" type="C5"></field>
-        <field no="2" name="证券代码" type="C5"></field>
+        <field no="2" name="证券代码" type="C5" filter="1"></field>
         <field no="3" name="中文证券简称" type="C32" encoding="UTF-16LE"></field>
         <field no="4" name="英文证券简称" type="C15"></field>
         <field no="5" name="收盘集合竞价时段参考价" type="N11(3)"></field>
@@ -311,10 +302,10 @@
         <field no="10" comments="HH:MM:SS.000 为此港股通证券收市竞价交易时段信息最近的更新时间 当天收市价更新后，此更新时间固定不变。"></field>
       </comments>
     </block>
-    <block header="MD406" name="MD406 - 港股通证券开市竞价交易时段(POS)数据">
+    <block header="MD406" name="港股通证券开市竞价交易时段(POS)数据" frozencolumncount="2">
       <fields>
         <field no="1" name="行情数据类型" type="C5"></field>
-        <field no="2" name="证券代码" type="C5"></field>
+        <field no="2" name="证券代码" type="C5" filter="1"></field>
         <field no="3" name="中文证券简称" type="C32" encoding="UTF-16LE"></field>
         <field no="4" name="英文证券简称" type="C15"></field>
         <field no="5" name="开盘集合竞价时段参考价" type="N11(3)"></field>

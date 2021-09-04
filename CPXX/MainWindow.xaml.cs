@@ -40,8 +40,6 @@ namespace CPXX
         public string header;
         public string name;
         public int frozencolumncount;
-        public int rows; // 记录行数
-        public int row_length;
 
         public bool drop; // 是否丢弃，无效行列
 
@@ -54,18 +52,6 @@ namespace CPXX
             frozencolumncount = 0;
             drop = false;
             file_cols = new List<FileCol>();
-        }
-
-        public int GetRowLength()
-        {
-            row_length = 0;
-            foreach (FileCol c in file_cols)
-            {
-                row_length += c.col_length;
-                row_length += 1; // 竖线分隔符，最后一个是换行符
-            }
-
-            return row_length;
         }
     }
 
@@ -116,20 +102,28 @@ namespace CPXX
         {
             InitializeComponent();
 
+            // tabitem先都隐藏起来
+            foreach (Object o in tbcBlock.Items)
+            {
+                (o as TabItem).Visibility = Visibility.Hidden;
+            }
+
             //使用CodePagesEncodingProvider去注册扩展编码。
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             // 加载文件格式定义
             LoadDefine();
-            dataGrid.ItemsSource = quotesItems;
+
+            //sbVersion.Content = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            sbVersion.Content = System.Diagnostics.FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).FileVersion;
+
         }
 
         readonly List<FileDefine> fileDefines = new();
 
         // 保存数据条目
-        readonly ObservableCollection<ExpandoObject> quotesItems = new();
         readonly Dictionary<BlockDefine, ObservableCollection<ExpandoObject>> blDict = new();
 
-        string filterText = string.Empty;
+        // 文件索引
         private FileDefine fdefine;
 
         private void LoadDefine()
@@ -174,7 +168,7 @@ namespace CPXX
                         col.col_encoding = encGBK;
                         if (f.Attributes["encoding"] != null)
                         {
-                            if(f.Attributes["encoding"].InnerText == "UTF16-LE")
+                            if(f.Attributes["encoding"].InnerText == "UTF-16LE")
                             {
                                 col.col_encoding = Encoding.Unicode;
                             }
@@ -216,53 +210,110 @@ namespace CPXX
                 return;
             }
 
+            // 界面初始化
+            btnFile.IsEnabled = false;
+            sbSetInfo.Visibility = Visibility.Hidden;
+            tbFilterText.IsEnabled = false;
+            sbError.Content = string.Empty;
+            tbcBlock.SelectedIndex = -1;
+
+            // tabitem先都隐藏起来
+            foreach (Object o in tbcBlock.Items)
+            {
+                (o as TabItem).Visibility = Visibility.Hidden;
+                (o as TabItem).Header = "数据";
+            }
+
             // 读取 cpxx02/reff/fjyYYYMMDD/mktdt04
             bool bRes = ParseFile(filename);
             if (!bRes)
             {
+                btnFile.IsEnabled = true;
                 return;
             }
 
-            // 构建tabcontrol和datagrid视图
-            int i = 0;
-            foreach(BlockDefine bd in blDict.Keys)
+            // 构建tabcontrol和datagrid视图，超过5个提示下
+            if (blDict.Count > tbcBlock.Items.Count)
             {
-                (tbcBlock.Items[i] as TabItem).Visibility = Visibility.Visible;
-                i++;
+                MessageBox.Show("文件区块过多，请反馈给作者修改程序支持！");
+                return;
             }
 
-
-            BlockDefine bdefine = fdefine.blockDefines[0];
-
-            // 没有列启用了filter属性，不支持过滤
-            bool canFilter = bdefine.file_cols.Exists(c => { return c.col_canfilter; });
-            tbFilterText.IsEnabled = canFilter;
-
-            btnFile.IsEnabled = false;
-            sbError.Content = string.Empty;
-
-            // 定义头
-            quotesItems.Clear();
-            dataGrid.Columns.Clear();
-            dataGrid.FrozenColumnCount = bdefine.frozencolumncount;
-            string colName;
-            foreach (FileCol c in bdefine.file_cols)
+            int i = 0;
+            DataGrid dg = dataGrid;
+            foreach (BlockDefine bd in blDict.Keys)
             {
-                if (c.col_hidden)
+                TabItem ti = tbcBlock.Items[i] as TabItem;
+                ti.Visibility = Visibility.Visible;
+                ti.Tag = bd;
+
+                // block有名字显示名字，没名字显示分割头字符串；单文件没有分割头，显示文件信息
+                if (!string.IsNullOrEmpty(bd.name))
                 {
-                    continue;
+                    ti.Header = bd.name;
+                }
+                else if (!string.IsNullOrEmpty(bd.header))
+                {
+                    ti.Header = bd.header;
+                }
+                else if (!string.IsNullOrEmpty(fdefine.file_description))
+                {
+                    ti.Header = fdefine.file_description;
+                }
+                else if (!string.IsNullOrEmpty(fdefine.file_type))
+                {
+                    ti.Header = fdefine.file_type;
                 }
 
-                colName = c.col_name;
+                //todo: 优化
+                if (i == 0) dg = dataGrid;
+                if (i == 1) dg = dataGrid2;
+                if (i == 2) dg = dataGrid3;
+                if (i == 3) dg = dataGrid4;
+                if (i == 4) dg = dataGrid5;
 
-                dataGrid.Columns.Add(new DataGridTextColumn
+                dg.Tag = bd; 
+                dg.ItemsSource = blDict[bd];
+                i++;
+
+                BlockDefine bdefine = bd;
+                // 定义头
+                dg.Columns.Clear();
+                dg.FrozenColumnCount = bdefine.frozencolumncount;
+                string colName;
+                foreach (FileCol c in bdefine.file_cols)
                 {
-                    Header = colName, // 防止 _ 被转义为快捷键
-                    Binding = new Binding(colName)
-                });
+                    if (c.col_hidden)
+                    {
+                        continue;
+                    }
+
+                    colName = c.col_name;
+
+                    dg.Columns.Add(new DataGridTextColumn
+                    {
+                        Header = colName, // 防止 _ 被转义为快捷键
+                        Binding = new Binding(colName)
+                    });
+                }
+
             }
 
-            sbiInfo.Content = "文件记录数：" + quotesItems.Count;
+            // 统计总记录数
+            int sumCount = 0;
+            foreach(BlockDefine bd in blDict.Keys)
+            {
+                sumCount += blDict[bd].Count;
+            }
+            sbiInfo.Content = string.Format("文件记录数：{0}", sumCount);
+
+            // 多个集合才需要显示集合记录
+            if (blDict.Count > 1)
+            {
+                sbSetInfo.Visibility = Visibility.Visible;
+            }
+            tbcBlock.SelectedIndex = 0;
+            TbcBlock_SelectionChanged(tbcBlock, null);
             btnFile.IsEnabled = true;
         }
 
@@ -367,9 +418,10 @@ namespace CPXX
             {
                 return;
             }
+         
+            BlockDefine bdefine = (tbcBlock.SelectedItem as TabItem).Tag as BlockDefine;
 
-            filterText = tbFilterText.Text;
-            System.ComponentModel.ICollectionView cvs = CollectionViewSource.GetDefaultView(dataGrid.ItemsSource);
+            System.ComponentModel.ICollectionView cvs = CollectionViewSource.GetDefaultView(blDict[bdefine]);
             if (cvs != null && cvs.CanFilter)
             {
                 cvs.Filter = OnFilterApplied;
@@ -378,13 +430,14 @@ namespace CPXX
 
         private bool OnFilterApplied(object obj)
         {
-            BlockDefine bdefine = fdefine.blockDefines[0];
+            BlockDefine bdefine = (tbcBlock.SelectedItem as TabItem).Tag as BlockDefine;
+
             if (obj is ExpandoObject)
             {
                 IDictionary<string, object> item = (IDictionary<string, object>)obj;
                 foreach (FileCol c in bdefine.file_cols)
                 {
-                    if (c.col_canfilter && item[c.col_name].ToString().Contains(filterText))
+                    if (c.col_canfilter && item[c.col_name].ToString().Contains(tbFilterText.Text))
                     {
                         return true;
                     }
@@ -400,7 +453,7 @@ namespace CPXX
                 return;
             }
 
-            BlockDefine bdefine = fdefine.blockDefines[0];
+            BlockDefine bdefine = (sender as DataGrid).Tag as BlockDefine;
             string header = e.AddedCells[0].Column.Header.ToString();
             FileCol col = bdefine.file_cols.Find(col => { return col.col_name == header; });
 
@@ -411,7 +464,25 @@ namespace CPXX
             }
         }
 
-        private void Grid_DragEnter(object sender, DragEventArgs e)
+        private void TbcBlock_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if ((sender as TabControl).SelectedItem == null)
+            {
+                return;
+            }
+
+            if (((sender as TabControl).SelectedItem as TabItem).Tag is not BlockDefine bdefine)
+            {
+                return;
+            }
+
+            // 没有列启用了filter属性，不支持过滤
+            bool canFilter = bdefine.file_cols.Exists(c => { return c.col_canfilter; });
+            tbFilterText.IsEnabled = canFilter;
+            sbSetInfo.Content = string.Format("集合记录数：{0}", blDict[bdefine].Count);
+        }
+
+        private void TbcBlock_DragEnter(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
@@ -423,7 +494,7 @@ namespace CPXX
             }
         }
 
-        private void Grid_Drop(object sender, DragEventArgs e)
+        private void TbcBlock_Drop(object sender, DragEventArgs e)
         {
             var fileName = ((System.Array)e.Data.GetData(DataFormats.FileDrop)).GetValue(0).ToString();
             tbFile.Text = fileName;
