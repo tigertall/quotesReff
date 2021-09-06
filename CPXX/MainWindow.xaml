@@ -16,9 +16,9 @@
             <RowDefinition Height="20"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="30"/>
-            <RowDefinition Height="400"/>
-            <RowDefinition Height="5"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="7"/>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="23"/>
         </Grid.RowDefinitions>
         <Menu>
