@@ -341,5 +341,100 @@
       </comments>
     </block>
   </file>
+  <file type="OFD_C1" description="基金基础参数" pattern="OFD_.*_C1.TXT">
+    <block  frozencolumncount="2">
+      <fields>
+        <field no="1" name="序号" name_eng="SequenceNO" type="A20"></field>
+        <field no="2" name="基金代码" name_eng="FundCode" type="C6" filter="1"></field>
+        <field no="3" name="收费方式" name_eng="ShareClass" type="A1"></field>
+        <field no="4" name="基金名称" name_eng="FundName" type="C40" filter="1"></field>
+        <field no="5" name="基金简称" name_eng="FundNameAbbr" type="C20"></field>
+        <field no="6" name="基金总份数" name_eng="TotalFundVol" type="N16（2）"></field>
+        <field no="7" name="基金类型" name_eng="FundType" type="C2"></field>
+        <field no="8" name="基金类型名称" name_eng="FundTypeName" type="C30"></field>
+        <field no="9" name="是否保本基金" name_eng="IsGuaranteedFund" type="C1"></field>
+        <field no="10" name="是否LOF基金" name_eng="IsLOFFund" type="C1"></field>
+        <field no="11" name="是否QDII基金" name_eng="IsQDIIFund" type="C1"></field>
+        <field no="12" name="是否ETF基金" name_eng="IsETFFund" type="C1"></field>
+        <field no="13" name="赎回费归基金资产比例" name_eng="RedeemFeeBackRatio" type="N16（2）"></field>
+        <field no="14" name="默认分红方式" name_eng="DefDividendMethod" type="A1"></field>
+        <field no="15" name="指定赎回方式" name_eng="RedemptionSequence" type="C1"></field>
+        <field no="16" name="申购金额上限" name_eng="BuyUpperAmount" type="N16(2)"></field>
+        <field no="17" name="基金转换转入金额上限" name_eng="CovertInUpperAmount" type="N16(2)"></field>
+        <field no="18" name="定时定额申购金额上限" name_eng="PeriodSubUpperAmount" type="N16(2)"></field>
+        <field no="19" name="法人追加认购金额" name_eng="InstAppSubsAmnt" type="N16（2）"></field>
+        <field no="20" name="法人追加认购份数" name_eng="InstAppSubsVol" type="N16（2）"></field>
+        <field no="21" name="法人首次认购最低金额" name_eng="MinAmountByInst" type="N16（2）"></field>
+        <field no="22" name="法人首次认购最低份数" name_eng="MinVolByInst" type="N16（2）"></field>
+        <field no="23" name="结算币种" name_eng="CurrencyType" type="A3"></field>
+        <field no="24" name="托管人代码" name_eng="CustodianCode" type="C3"></field>
+        <field no="25" name="定时定额申购的金额" name_eng="AmountOfPeriodicSubs" type="N16（2）"></field>
+        <field no="26" name="定时定额申购日期" name_eng="DateOfPeriodicSubs" type="A8"></field>
+        <field no="27" name="基金最高赎回份数" name_eng="MaxRedemptionVol" type="N16（2）"></field>
+        <field no="28" name="基金最低持有份数" name_eng="MinAccountBalance" type="N16（2）"></field>
+        <field no="29" name="基金募集开始日期" name_eng="IPOStartDate" type="A8"></field>
+        <field no="30" name="基金募集结束日期" name_eng="IPOEndDate" type="A8"></field>
+        <field no="31" name="基金成立日期" name_eng="FundEstablishDate" type="A8"></field>
+        <field no="32" name="基金管理人" name_eng="FundManagerCode" type="C3"></field>
+        <field no="33" name="个人追加认购份数" name_eng="IndiAppSubsVol" type="N16（2）"></field>
+        <field no="34" name="个人追加认购金额" name_eng="IndiAppSubsAmount" type="N16（2）"></field>
+        <field no="35" name="个人首次认购最低份数" name_eng="MinSubsVolByIndi" type="N16（2）"></field>
+        <field no="36" name="个人首次认购最低金额" name_eng="MinSubsAmountByIndi" type="N16（2）"></field>
+        <field no="37" name="注册登记人代码" name_eng="RegistrarCode" type="C2"></field>
+        <field no="38" name="基金规模" name_eng="FundSize" type="N16（2）"></field>
+        <field no="39" name="交易所标志" name_eng="ExchangeFlag" type="C1"></field>
+        <field no="40" name="基金发起人" name_eng="FundSponsor" type="A3"></field>
+        <field no="41" name="基金面值" name_eng="FaceValue" type="N7（4）"></field>
+        <field no="42" name="个人最高认购份数" name_eng="MaxSubsVolByIndi" type="N16（2）"></field>
+        <field no="43" name="个人最高认购金额" name_eng="MaxSubsAmountByIndi" type="N16（2）"></field>
+        <field no="44" name="法人最高认购份数" name_eng="MaxSubsVolByInst" type="N16（2）"></field>
+        <field no="45" name="法人最高认购金额" name_eng="MaxSubsAmountByInst" type="N16（2）"></field>
+        <field no="46" name="个人认购份数单位" name_eng="UnitSubsVolByIndi" type="N16（2）"></field>
+        <field no="47" name="个人认购金额单位" name_eng="UnitSubsAmountByIndi" type="N16（2）"></field>
+        <field no="48" name="法人认购份数单位" name_eng="UnitSubsVolByInst" type="N16（2）"></field>
+        <field no="49" name="法人认购金额单位" name_eng="UnitSubsAmountByInst" type="N16（2）"></field>
+        <field no="50" name="个人首次申购最低金额" name_eng="MinBidsAmountByIndi" type="N16（2）"></field>
+        <field no="51" name="法人首次申购最低金额" name_eng="MinBidsAmountByInst" type="N16（2）"></field>
+        <field no="52" name="个人追加申购最低金额" name_eng="MinAppBidsAmountByIndi" type="N16（2）"></field>
+        <field no="53" name="法人追加申购最低金额" name_eng="MinAppBidsAmountByInst" type="N16（2）"></field>
+        <field no="54" name="基金最少赎回份数" name_eng="MinRedemptionVol" type="N16（2）"></field>
+        <field no="55" name="最低基金转换份数" name_eng="MinInterconvertVol" type="N16（2）"></field>
+        <field no="56" name="个人发行方式" name_eng="IssueTypeByIndi" type="C1"></field>
+        <field no="57" name="机构发行方式" name_eng="IssueTypeByInst" type="C1"></field>
+        <field no="58" name="认购方式" name_eng="SubsType" type="C1"></field>
+        <field no="59" name="交易费收取方式" name_eng="CollectFeeType" type="C1"></field>
+        <field no="60" name="个人最大申购金额" name_eng="IndiMaxPurchase" type="N16(2)"></field>
+        <field no="61" name="法人最大申购金额" name_eng="InstMaxPurchase" type="N16(2)"></field>
+        <field no="62" name="个人当日累计购买最大金额" name_eng="IndiDayMaxSumBuy" type="N16(2)"></field>
+        <field no="63" name="法人当日累计购买最大金额" name_eng="InstDayMaxSumBuy" type="N16(2)"></field>
+        <field no="64" name="个人当日累计赎回最大份额" name_eng="IndiDayMaxSumRedeem" type="N16(2)"></field>
+        <field no="65" name="法人当日累计赎回最大份额" name_eng="InstDayMaxSumRedeem" type="N16(2)"></field>
+        <field no="66" name="个人最大赎回份额" name_eng="IndiMaxRedeem" type="N16(2)"></field>
+        <field no="67" name="法人最大赎回份额" name_eng="InstMaxRedeem" type="N16(2)"></field>
+        <field no="68" name="注册登记人名称" name_eng="RegistrarName" type="C40"></field>
+        <field no="69" name="基金管理人名称" name_eng="FundManagerName" type="C40"></field>
+        <field no="70" name="基金公司客服电话" name_eng="FundServerTel" type="C30"></field>
+        <field no="71" name="基金公司网站网址" name_eng="FundInternetAddress" type="C40"></field>
+        <field no="72" name="摘要/说明" name_eng="Specification" type="C60"></field>
+        <field no="73" name="全量标志" name_eng="WholeFlag" type="C1"></field>
+        <field no="74" name="修改方式" name_eng="ModifyWay" type="C1"></field>
+        <field no="75" name="生效日期" name_eng="OperateDate" type="A8"></field>
+        <field no="76" name="交易数据下传日期" name_eng="DownLoaddate" type="A8"></field>
+      </fields>
+      <comments>
+        <field no="1" comments="唯一确定一条记录，不能重复"></field>
+        <field no="3" comments="0-前收费，1-后收费 2-前后收费共用（基金代码）"></field>
+        <field no="7" comments="01-股票型02-债券型03-混合型04-货币型"></field>
+        <field no="38" comments="基金的金额规模"></field>
+        <field no="39" comments="指基金发行渠道 0-深圳场内（含场外）1-上海场内（含场外）2-场外"></field>
+        <field no="56" comments="1-比例发行 2-摇号 3-先来先买"></field>
+        <field no="57" comments="1-比例发行 2-摇号 3-先来先买"></field>
+        <field no="58" comments="0-金额认购 1-份数认购"></field>
+        <field no="59" comments="0-价内费 1-价外费"></field>
+        <field no="73" comments="0-增量   1-全量"></field>
+        <field no="74" comments="增量方式传递参数必填 0-新增  1-修改  2-删除"></field>
+      </comments>
+    </block>
+  </file>
 </files>
 

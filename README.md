@@ -1,5 +1,5 @@
 # quotesReff
-上海行情文本文件解析展示，比如cpxx02，fjyYYYYMMDD，reff04，mktdt04等。
+上海行情文本文件解析展示，比如cpxx02，fjyYYYYMMDD，reff04，mktdt04，OFD_C1等。
 
 ![image](https://user-images.githubusercontent.com/1582931/132092000-59582c96-e745-4dd3-bc85-07f098a2a714.png)
 
@@ -16,6 +16,7 @@
 * fjyYYYYMMDD-非交易信息
 * reff04-港股基础信息
 * mktdt04-沪港通实时行情
+* OFD_C1-基金基础参数
 
 4. 左下角会展示解析出来的文件记录数有多少，不统计配置为丢弃的block内容。对于多类型数据的文件，选择对应标签页的时候，还会显示这个类型的数据有多少条。
 
@@ -43,6 +44,7 @@
 field描述字段结构定义：
 * no: 字段编号，不可为空。
 * name: 字段名，展示时候的列头，不可为空。
+* name_eng：字段英文名，目前OFD_C1类型文件用来过滤非必填字段使用，其他类型文件不需配置。
 * type: 字段长度是最重要的，要按照长度解析文件结构。
 * filter: "1" 表示针对该字段启用过滤，可以配置多个字段，会使用这些字段查找。当文件有过滤字段时，过滤的文本框会启用，输入查找内容后回车进行过滤。
 * hidden: "1" 配置表示该字段不展示，cpxx和fjy有些意义不重要的字段，配置上可以减少列宽。
@@ -56,6 +58,7 @@ comments描述定义，选中单元格时，会在界面下的文本框中展示
 行情文件版本：
 * [IS101_上海证券交易所竞价撮合平台市场参与者接口规格说明书1.53版_20210607](http://www.sse.com.cn/services/tradingservice/tradingtech/technical/data/c/IS101_PartTradInterface_CV1.53_20210607.pdf)
 * [IS117_上海证券交易所港股通市场参与者接口规格说明书(港股交易)1.06版_20200915](http://www.sse.com.cn/services/tradingservice/tradingtech/technical/data/c/IS117_SSE_HKSE_ITPInterface_CV106_20200915.pdf)
+* [中央数据交换平台开放式基金业务数据交换协议_20180205](http://www.chinaclear.cn/zdjs/sjjhtz/201802/eb15bd4820af483ea111d284a55ed1b0.shtml)
 
 ## BUG反馈
 Mail: `echo "dGlnZXJ0YWxsQDEyNi5jb20K" |base64 -d`
