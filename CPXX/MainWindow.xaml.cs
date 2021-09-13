@@ -26,6 +26,7 @@ namespace CPXX
     {
         public string file_type;
         public string file_pattern;
+        public string file_parser;
         public string file_description;
         public List<BlockDefine> blockDefines;
 
@@ -144,6 +145,7 @@ namespace CPXX
                 FileDefine fdefine = new();
                 fdefine.file_type = fl.Attributes["type"].InnerText;
                 fdefine.file_pattern = fl.Attributes["pattern"].InnerText;
+                fdefine.file_parser = fl.Attributes["parser"].InnerText;
 
                 fdefine.file_description = fl.Attributes["description"] != null ? fl.Attributes["description"].InnerText: string.Empty;
 
@@ -228,17 +230,23 @@ namespace CPXX
             }
 
             bool bRes = false;
-            if (shortname.StartsWith("OFD_"))
+
+            ParserFactory parserFact = new ParserFactory();
+            IParser parser = parserFact.GetParser(fdefine.file_parser);
+            if (parser == null)
             {
-                bRes = PareseFileOFD(filename);
-            }
-            else // 读取 cpxx02/reff/fjyYYYMMDD/mktdt04
-            {
-                bRes = ParseFile(filename);
+                sbError.Content = "未识别的文件解析器！";
+                btnFile.IsEnabled = true;
+                return;
             }
 
-            if (!bRes)
+            try
             {
+                parser.ParseFile(filename, fdefine, blDict);
+            }
+            catch (Exception e)
+            {
+                sbError.Content = e.Message;
                 btnFile.IsEnabled = true;
                 return;
             }
@@ -326,174 +334,6 @@ namespace CPXX
             tbcBlock.SelectedIndex = 0;
             TbcBlock_SelectionChanged(tbcBlock, null);
             btnFile.IsEnabled = true;
-        }
-
-        private bool ParseFile(string filename)
-        {
-            // 数据存放定义
-            blDict.Clear();
-
-            // 找到最长的头，用于定位数据类型
-            // 先按照最长的读取，然后按照字串截取判断跟哪一个block一致
-            int headerLength = 0;
-            fdefine.blockDefines.ForEach(x => { 
-                if (x.header.Length > headerLength)
-                { 
-                    headerLength = x.header.Length; 
-                }
-            });
-
-            // 读取文件内容
-            byte[] info = File.ReadAllBytes(filename);
-            string header;
-            int n = 0;
-            string colName, colValue;
-            BlockDefine bdefine;
-            ObservableCollection<ExpandoObject> blockItems;
-            while (n < info.Length)
-            {
-                // 定位合适的头，现在都是英文，都用UTF-8先看下
-                header = Encoding.UTF8.GetString(info, n, headerLength);
-                bdefine = fdefine.blockDefines.Find(x => { 
-                    return x.header.StartsWith(header.Substring(0, x.header.Length)); 
-                });
-
-                if (bdefine == null)
-                {
-                    sbError.Content = string.Format("未识别的文件结构！{0} 位置{1}", header, n);
-                    return false;
-                }
-
-                // 尝试读取一段数据，一般是一行
-                dynamic item = new ExpandoObject();
-                foreach (FileCol c in bdefine.file_cols)
-                {
-                    colName = c.col_name;
-                    colValue = c.col_encoding.GetString(info, n, c.col_length); // 获取值
-                    n += c.col_length;
-                    n += 1;  // |分隔符和行尾换行
-
-                    // 不显示的过滤掉
-                    if (c.col_hidden)
-                    {
-                        continue;
-                    }
-
-                    // 如果是数字类型，直接把空格处理掉，减少占用的列宽
-                    if (c.col_type == "N")
-                    {
-                        colValue = colValue.Trim();
-                    }
-
-                    (item as IDictionary<string, object>).Add(colName, colValue);
-                }
-
-                if (bdefine.drop)  // 配置为丢弃处理的话，直接扔掉
-                {
-                    continue;
-                }
-
-                // 如果是新出现的block，那么构建存放的集合
-                if (!blDict.ContainsKey(bdefine))
-                {
-                    blDict.Add(bdefine, new());
-                }
-                blockItems = blDict[bdefine];
-                blockItems.Add(item);
-            }
-
-            return true;
-        }
-
-        private bool PareseFileOFD(string filename)
-        { 
-            // 数据存放定义
-            blDict.Clear();
-
-            BlockDefine bdefine = fdefine.blockDefines[0];
-
-            string[] info = File.ReadAllLines(filename, Encoding.GetEncoding("GBK"));
-
-            // OFD的特别处理，当作文本读取，跳过头部定义
-            // 前10行定义跳过；前9行是10，第10行是多少字段；字段后是多少行数据；最后一个文件结束行跳过
-
-            // 存在非必须字段，文件里可能没有，保存下文件里提供的字段
-            int colsCount = int.Parse(info[9]);
-            List<string> fileCols = new();
-            int index_line = 10, i = 0;
-            while (i < colsCount)
-            {
-                i++;
-                fileCols.Add(info[index_line].Trim().ToLower()); // 不规范的大小写头，有些字段全大写，转换下比较
-                index_line++;
-            }
-
-            // 记录数
-            int recdsCount = int.Parse(info[index_line]);
-            index_line++;
-
-            string line, colName, colValue;
-            i = 0;
-            ObservableCollection<ExpandoObject> blockItems;
-            while (i < recdsCount)
-            {
-                i++;
-                line = info[index_line];
-                index_line++;
-
-                byte[] line_bytes = Encoding.GetEncoding("GBK").GetBytes(line);
-                // 尝试读取一段数据，一般是一行
-                int n = 0;
-                dynamic item = new ExpandoObject();
-                foreach (FileCol c in bdefine.file_cols)
-                {
-
-                    // 过滤掉文件中不存在的非列
-                    if(!fileCols.Contains(c.col_name_eng.ToLower()))
-                    {
-                        continue;
-                    }
-
-                    colName = c.col_name;
-                    colValue = c.col_encoding.GetString(line_bytes, n, c.col_length); // 获取值
-                    n += c.col_length;
-
-                    // 不显示的过滤掉
-                    if (c.col_hidden)
-                    {
-                        continue;
-                    }
-
-                    // 如果是数字类型，直接把空格处理掉，减少占用的列宽
-                    // OFD文件展示再处理下格式，加上小数点
-                    if (c.col_type == "N")
-                    {
-                        colValue = colValue.Trim();
-                        if (c.col_scale > 0) // OFD的默认展示太难看了，优化下展示
-                        {
-                            colValue = string.Format("{0:0.########}", Int64.Parse(colValue) / Math.Pow(10, c.col_scale));
-                        }
-                    }
-                    
-
-                    (item as IDictionary<string, object>).Add(colName, colValue);
-                }
-
-                if (bdefine.drop)  // 配置为丢弃处理的话，直接扔掉
-                {
-                    continue;
-                }
-
-                // 如果是新出现的block，那么构建存放的集合
-                if (!blDict.ContainsKey(bdefine))
-                {
-                    blDict.Add(bdefine, new());
-                }
-                blockItems = blDict[bdefine];
-                blockItems.Add(item);
-            }
-
-            return true;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

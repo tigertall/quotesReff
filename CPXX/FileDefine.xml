@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <files ver="20210831">
-  <file type="cpxx02" description="产品信息" pattern="cpxx02\d{6}">
+  <file type="cpxx02" description="产品信息" pattern="cpxx02\d{6}" parser="SHCPXX">
     <block frozencolumncount="1">
       <fields>
         <field no="1" name="证券代码" type="C6" filter="1"></field>
@@ -75,7 +75,7 @@
       </comments>
     </block>
   </file>
-  <file type="fjyYYYYMMDD" description="非交易信息" pattern="fjy\d{8}">
+  <file type="fjyYYYYMMDD" description="非交易信息" pattern="fjy\d{8}" parser="SHCPXX">
     <block frozencolumncount="2">
       <fields>
         <field no="1" name="参考数据类型" type="C5"></field>
@@ -139,7 +139,7 @@
       </comments>
     </block>
   </file>
-  <file type="reff04" description="港股基础信息" pattern="reff04\d{4}">
+  <file type="reff04" description="港股基础信息" pattern="reff04\d{4}" parser="SHCPXX">
     <block frozencolumncount="2">
       <fields>
         <field no="1" name="参考数据类型" type="C5"></field>
@@ -185,7 +185,7 @@
       </comments>
     </block>
   </file>
-  <file type="mktdt04" description="港股实时行情" pattern="mktdt04">
+  <file type="mktdt04" description="港股实时行情" pattern="mktdt04" parser="SHCPXX">
     <block header="HEADER" drop="1">
       <fields>
         <field no="1" name="起始标识符" type="C6"></field>
@@ -341,7 +341,7 @@
       </comments>
     </block>
   </file>
-  <file type="OFD_C1" description="基金基础参数" pattern="OFD_.*_C1.TXT">
+  <file type="OFD_C1" description="基金基础参数" pattern="OFD_.*_C1.TXT" parser="OFD">
     <block  frozencolumncount="2">
       <fields>
         <field no="1" name="序号" name_eng="SequenceNO" type="A20"></field>
