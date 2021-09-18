@@ -121,10 +121,14 @@ namespace CPXX
 
         }
 
-        readonly List<FileDefine> fileDefines = new();
+        // 保存文件格式定义，单例
+        private static readonly List<FileDefine> fileDefines = new();
 
-        // 保存数据条目
-        readonly Dictionary<BlockDefine, ObservableCollection<ExpandoObject>> blDict = new();
+        // 保存数据条目，单例
+        private static readonly Dictionary<BlockDefine, ObservableCollection<ExpandoObject>> blDict = new();
+
+        // 保存文件读取解析器，单例工厂
+        private static readonly ParserFactory parserFact = new();
 
         // 文件索引
         private FileDefine fdefine;
@@ -228,10 +232,7 @@ namespace CPXX
                 (o as TabItem).Visibility = Visibility.Hidden;
                 (o as TabItem).Header = "数据";
             }
-
-            bool bRes = false;
-
-            ParserFactory parserFact = new ParserFactory();
+            
             IParser parser = parserFact.GetParser(fdefine.file_parser);
             if (parser == null)
             {
@@ -312,7 +313,9 @@ namespace CPXX
                     dg.Columns.Add(new DataGridTextColumn
                     {
                         Header = colName, // 防止 _ 被转义为快捷键
-                        Binding = new Binding(colName)
+                        Binding = new Binding(colName),
+                        // 字符串左对齐，数字型右对齐
+                        ElementStyle = (c.col_type == "C" ? Resources["dgCellLeft"] : Resources["dgCellRight"]) as Style
                     });
                 }
 

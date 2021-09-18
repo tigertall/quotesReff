@@ -82,7 +82,7 @@ namespace CPXX
                         colValue = colValue.Trim();
                         if (c.col_scale > 0) // OFD的默认展示太难看了，优化下展示
                         {
-                            colValue = string.Format("{0:0.########}", Int64.Parse(colValue) / Math.Pow(10, c.col_scale));
+                            colValue = string.Format("{0:F" + c.col_scale + "}", long.Parse(colValue) / Math.Pow(10, c.col_scale));
                         }
                     }
 

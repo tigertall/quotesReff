@@ -10,6 +10,12 @@
         <Style x:Key="DataGridColumnHeaderStyle1" TargetType="{x:Type DataGridColumnHeader}">
             <Setter Property="Foreground" Value="#5C5C5C" />
         </Style>
+        <Style x:Key="dgCellLeft" TargetType="TextBlock">
+            <Setter Property="TextAlignment" Value="Left"/>
+        </Style>
+        <Style x:Key="dgCellRight" TargetType="TextBlock">
+            <Setter Property="TextAlignment" Value="Right"/>
+        </Style>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -59,9 +65,12 @@
             </TabControl.Resources>
             <TabItem Header="数据">
                 <DataGrid ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" Grid.Row="3" x:Name="dataGrid" AutoGenerateColumns="False" IsReadOnly="True" SelectionUnit="CellOrRowHeader" HorizontalAlignment="Left" AlternationCount="2" GridLinesVisibility="All" SelectedCellsChanged="DataGrid_SelectedCellsChanged" AlternatingRowBackground="#cfe2f3" FontFamily="Microsoft YaHei" FontWeight="Normal" VerticalGridLinesBrush="#FFDADADA" HorizontalGridLinesBrush="#FFDADADA" ItemsSource="{Binding quotesItems}" AllowDrop="True">
+                    <DataGrid.CellStyle>
+                        <Style/>
+                    </DataGrid.CellStyle>
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="编号" Width="80" Binding="{Binding}"/>
-                        <DataGridTextColumn Header="包序列号" Width="*"  Binding="{Binding}"/>
+                        <DataGridTextColumn Header="编号" Width="80" Binding="{Binding}" ElementStyle="{DynamicResource dgCellLeft}"/>
+                        <DataGridTextColumn Header="包序列号" Width="*"  Binding="{Binding}" ElementStyle="{DynamicResource dgCellRight}"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>
