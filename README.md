@@ -4,7 +4,7 @@
 ![image](https://user-images.githubusercontent.com/1582931/132092000-59582c96-e745-4dd3-bc85-07f098a2a714.png)
 
 ## 使用说明
-1. 仅支持x64运行平台。依赖.NET Desktop Runtime 8.0 x64运行时，从微软的官网可以下载安装。[windowsdesktop-runtime-5.0.9-win-x64](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-8.0.24-windows-x64-installer)
+1. 仅支持x64运行平台。依赖.NET Desktop Runtime 8.0 x64运行时，从微软的官网可以下载安装。[windowsdesktop-runtime-8.0.24-win-x64](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-8.0.24-windows-x64-installer)
 
 2. 打开文件的方式：
 * 菜单【文件】-【打开】，选择文件路径解析；
