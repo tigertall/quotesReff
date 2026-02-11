@@ -8,9 +8,8 @@ if (!$Rev)
   Write-Host $Rev.Matches.Groups[1]
   $Rev = $Rev.Matches.Groups[1]
 }
-cd  bin\Debug\net5.0-windows
-zip CPXX-v$Rev.zip -r *  -x CPXX.runtimeconfig.dev.json
-zip CPXX-v$Rev.zip -j ..\..\..\..\README.md
+cd  bin\Debug\net8.0-windows7.0
+Compress-Archive -Path "*","..\..\..\..\README.md" -DestinationPath CPXX-v$Rev.zip -Force
 cd ../../../
 if (Test-Path .\CPXX-v$Rev.zip) {Remove-Item .\CPXX-v$Rev.zip}
-Move-Item bin\Debug\net5.0-windows\CPXX-v$Rev.zip .\
+Move-Item bin\Debug\net8.0-windows7.0\CPXX-v$Rev.zip .\
